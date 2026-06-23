@@ -92,7 +92,6 @@ function iniciarJogo()
     });
 }
 
-
 function escolherDificuldade() 
 {
     console.log('\nEscolha a dificuldade:');
@@ -114,9 +113,10 @@ function escolherDificuldade()
 
         const sorteio = filtro[Math.floor(Math.random() * filtro.length)];
         palavraSecreta = sorteio.palavra;
+        categoria = sorteio.categoria; // Salva a categoria na variável global
         letrasDescobertas = Array(palavraSecreta.length).fill('_');
-        console.log(`\nCategoria sorteada: ${sorteio.categoria}`);
-        jogar();
+        
+        jogar(); // Chama o jogar, que cuidará de exibir a categoria na tela limpa
     });
 }
 
@@ -125,7 +125,9 @@ function jogar()
     console.clear();
     console.log(forcaEstagios[erros]);
     
-    console.log(`\nPalavra: ${letrasDescobertas.join(' ')} | Erros: ${erros}/${maxErros}`);
+    // Exibe a categoria sempre que a tela for redesenhada
+    console.log(`\nCategoria: ${categoria}`); 
+    console.log(`Palavra: ${letrasDescobertas.join(' ')} | Erros: ${erros}/${maxErros}`);
     console.log(`Letras tentadas: ${letrasTentadas.join(', ')}`);
     
     rl.question('Digite uma letra: ', (letra) => {
@@ -155,7 +157,6 @@ function jogar()
             let ptsFinais = (palavraSecreta.length * 10) - (erros * 5);
             ptsFinais = ptsFinais > 0 ? ptsFinais : 0;
             
-            // Lógica de carregar, somar e salvar o ranking
             let ranking = carregarRanking();
             let jogadorExistente = ranking.find(r => r.nome.toUpperCase() === jogador.toUpperCase());
 
@@ -177,7 +178,6 @@ function jogar()
         }
     });
 }
-
 
 function perguntarNovamente() 
 {
