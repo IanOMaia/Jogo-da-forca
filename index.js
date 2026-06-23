@@ -29,7 +29,19 @@ const banco = [
 ];
 
 let palavraSecreta = '', letrasDescobertas = [], letrasTentadas = [], erros = 0, jogador = '';
+let ranking = []; 
 const maxErros = 6;
+
+function mostrarRanking()
+{
+    console.log('\n--- RANKING DA SESSÃO ---');
+    ranking.sort((a, b) => b.pontos - a.pontos);
+    
+    ranking.forEach((entry, index) => 
+    {
+        console.log(`${index + 1}º - ${entry.nome}: ${entry.pontos} pts`);
+    });
+}
 
 function iniciarJogo() 
 {
@@ -78,7 +90,7 @@ function jogar()
         letra = letra.toUpperCase();
         if (letrasTentadas.includes(letra)) 
         { 
-            console.log('Já tentou essa!'); 
+            console.log('Você já tentou essa letra!'); 
             return jogar(); 
         }
         letrasTentadas.push(letra);
@@ -90,6 +102,7 @@ function jogar()
         else 
         { 
             erros++; 
+            console.log(`\nOpção errada! A letra ${letra} não existe na palavra.`);
         }
 
         if (erros >= maxErros) 
@@ -99,7 +112,11 @@ function jogar()
         }
         else if (!letrasDescobertas.includes('_')) 
         { 
-            console.log('\nParabéns! Você venceu!'); 
+            let pts = (palavraSecreta.length * 10) - (erros * 5);
+            ranking.push({ nome: jogador, pontos: pts > 0 ? pts : 0 });
+            
+            console.log(`\nParabéns! Você venceu com ${pts > 0 ? pts : 0} pontos.`);
+            mostrarRanking();
             perguntarNovamente(); 
         }
         else 
@@ -108,6 +125,7 @@ function jogar()
         }
     });
 }
+
 
 function perguntarNovamente() 
 {
