@@ -49,9 +49,18 @@ function iniciarJogo()
     rl.question('Digite seu nome: ', (nome) => 
     {
         jogador = nome;
+        
+        console.log(`\nOlá, ${jogador}!`);
+        console.log('--- COMO FUNCIONA A PONTUAÇÃO ---');
+        console.log('1. Palavras maiores valem mais (10 pts por letra).');
+        console.log('2. Cada erro subtrai 5 pontos.');
+        console.log('3. O objetivo é vencer com o menor número de erros possível!');
+        console.log('---------------------------------');
+        
         escolherDificuldade();
     });
 }
+
 
 function escolherDificuldade() 
 {
