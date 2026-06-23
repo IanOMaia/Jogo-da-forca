@@ -98,17 +98,22 @@ function escolherDificuldade()
 
 function jogar() 
 {
+    console.clear(); // Limpa a tela para o desenho aparecer sempre no topo
+    console.log(forcaEstagios[erros]); // Exibe o estágio atual da forca
+    
     console.log(`\nPalavra: ${letrasDescobertas.join(' ')} | Erros: ${erros}/${maxErros}`);
     console.log(`Letras tentadas: ${letrasTentadas.join(', ')}`);
     
     rl.question('Digite uma letra: ', (letra) => 
     {
         letra = letra.toUpperCase();
+        
         if (letrasTentadas.includes(letra)) 
         { 
             console.log('Você já tentou essa letra!'); 
             return jogar(); 
         }
+        
         letrasTentadas.push(letra);
 
         if (palavraSecreta.includes(letra)) 
@@ -123,6 +128,8 @@ function jogar()
 
         if (erros >= maxErros) 
         { 
+            console.clear();
+            console.log(forcaEstagios[erros]); // Mostra o boneco completo
             console.log(`\nFim de jogo! Você perdeu. A palavra era: ${palavraSecreta}`);
             perguntarNovamente(); 
         }
