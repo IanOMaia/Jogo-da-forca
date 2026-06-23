@@ -1,4 +1,6 @@
 const readline = require('readline');
+const fs = require('fs');
+
 
 const rl = readline.createInterface(
 {
@@ -39,15 +41,36 @@ let palavraSecreta = '', letrasDescobertas = [], letrasTentadas = [], erros = 0,
 let ranking = []; 
 const maxErros = 6;
 
-function mostrarRanking()
-{
-    console.log('\n--- RANKING DA SESSÃO ---');
-    ranking.sort((a, b) => b.pontos - a.pontos);
+function mostrarRanking() {
+    console.log('\n--- RANKING GERAL ---');
     
-    ranking.forEach((entry, index) => 
-    {
-        console.log(`${index + 1}º - ${entry.nome}: ${entry.pontos} pts`);
-    });
+    // Carrega o ranking atual do arquivo (o arquivo deve existir ou a função cria um vazio)
+    const rankingAtual = carregarRanking();
+    
+    if (rankingAtual.length === 0) {
+        console.log('Nenhum jogo registrado ainda.');
+    } else {
+        rankingAtual.forEach((r, index) => {
+            console.log(`${index + 1}. ${r.nome} - ${r.pontos} pts`);
+        });
+    }
+    console.log('---------------------');
+}
+
+
+function carregarRanking() 
+{
+    if (!fs.existsSync('ranking.json')) {
+        fs.writeFileSync('ranking.json', '[]');
+        return [];
+    }
+    const dados = fs.readFileSync('ranking.json', 'utf8');
+    return JSON.parse(dados);
+}
+
+function salvarRanking(ranking) 
+{
+    fs.writeFileSync('ranking.json', JSON.stringify(ranking, null, 2));
 }
 
 function iniciarJogo() 
@@ -98,52 +121,57 @@ function escolherDificuldade()
 
 function jogar() 
 {
-    console.clear(); // Limpa a tela para o desenho aparecer sempre no topo
-    console.log(forcaEstagios[erros]); // Exibe o estágio atual da forca
+    console.clear();
+    console.log(forcaEstagios[erros]);
     
     console.log(`\nPalavra: ${letrasDescobertas.join(' ')} | Erros: ${erros}/${maxErros}`);
     console.log(`Letras tentadas: ${letrasTentadas.join(', ')}`);
     
-    rl.question('Digite uma letra: ', (letra) => 
-    {
+    rl.question('Digite uma letra: ', (letra) => {
         letra = letra.toUpperCase();
         
-        if (letrasTentadas.includes(letra)) 
-        { 
+        if (letrasTentadas.includes(letra)) { 
             console.log('Você já tentou essa letra!'); 
             return jogar(); 
         }
         
         letrasTentadas.push(letra);
 
-        if (palavraSecreta.includes(letra)) 
-        {
+        if (palavraSecreta.includes(letra)) {
             palavraSecreta.split('').forEach((l, i) => { if (l === letra) letrasDescobertas[i] = letra; });
-        } 
-        else 
-        { 
+        } else { 
             erros++; 
             console.log(`\nOpção errada! A letra ${letra} não existe na palavra.`);
         }
 
-        if (erros >= maxErros) 
-        { 
+        if (erros >= maxErros) { 
             console.clear();
-            console.log(forcaEstagios[erros]); // Mostra o boneco completo
+            console.log(forcaEstagios[erros]);
             console.log(`\nFim de jogo! Você perdeu. A palavra era: ${palavraSecreta}`);
             perguntarNovamente(); 
         }
-        else if (!letrasDescobertas.includes('_')) 
-        { 
-            let pts = (palavraSecreta.length * 10) - (erros * 5);
-            ranking.push({ nome: jogador, pontos: pts > 0 ? pts : 0 });
+        else if (!letrasDescobertas.includes('_')) { 
+            let ptsFinais = (palavraSecreta.length * 10) - (erros * 5);
+            ptsFinais = ptsFinais > 0 ? ptsFinais : 0;
             
-            console.log(`\nParabéns! Você venceu com ${pts > 0 ? pts : 0} pontos.`);
+            // Lógica de carregar, somar e salvar o ranking
+            let ranking = carregarRanking();
+            let jogadorExistente = ranking.find(r => r.nome.toUpperCase() === jogador.toUpperCase());
+
+            if (jogadorExistente) {
+                jogadorExistente.pontos += ptsFinais;
+            } else {
+                ranking.push({ nome: jogador, pontos: ptsFinais });
+            }
+
+            ranking.sort((a, b) => b.pontos - a.pontos);
+            salvarRanking(ranking);
+            
+            console.log(`\nParabéns! Você venceu e somou ${ptsFinais} pontos.`);
             mostrarRanking();
             perguntarNovamente(); 
         }
-        else 
-        { 
+        else { 
             jogar(); 
         }
     });
