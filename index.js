@@ -1,5 +1,6 @@
 const readline = require('readline');
 const fs = require('fs');
+const forcaEstagios = require('./art.js');
 
 
 const rl = readline.createInterface(
