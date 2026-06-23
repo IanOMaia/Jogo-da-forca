@@ -1,0 +1,11 @@
+{
+  "name": "jogo-da-forca",
+  "version": "1.0.0",
+  "description": "Jogo da Forca desenvolvido em Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
