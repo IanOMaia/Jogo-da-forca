@@ -14,19 +14,26 @@ const banco = [
     { palavra: 'GATO', categoria: 'Animais' }, { palavra: 'UVA', categoria: 'Frutas' },
     { palavra: 'PATO', categoria: 'Animais' }, { palavra: 'KIWI', categoria: 'Frutas' },
     { palavra: 'MESA', categoria: 'Objetos' }, { palavra: 'REI', categoria: 'Geral' },
-    { palavra: 'BOLA', categoria: 'Objetos' },
+    { palavra: 'BOLA', categoria: 'Objetos' }, { palavra: 'LUA', categoria: 'Natureza' },
+    { palavra: 'RUA', categoria: 'Geral' },
 
     // Médio (5 a 7 letras)
     { palavra: 'MOUSE', categoria: 'Tecnologia' }, { palavra: 'BANANA', categoria: 'Frutas' },
     { palavra: 'LIVRO', categoria: 'Objetos' }, { palavra: 'TIGRE', categoria: 'Animais' },
     { palavra: 'CANETA', categoria: 'Objetos' }, { palavra: 'CHAVE', categoria: 'Objetos' },
     { palavra: 'BOLSA', categoria: 'Objetos' }, { palavra: 'MACA', categoria: 'Frutas' },
+    { palavra: 'BRASIL', categoria: 'Países' }, { palavra: 'CANADA', categoria: 'Países' },
+    { palavra: 'JAPAO', categoria: 'Países' }, { palavra: 'MEDICO', categoria: 'Profissões' },
+    { palavra: 'PINTOR', categoria: 'Profissões' },
 
     // Difícil (8 ou mais letras)
     { palavra: 'COMPUTADOR', categoria: 'Tecnologia' }, { palavra: 'ELEFANTE', categoria: 'Animais' },
     { palavra: 'TECLADO', categoria: 'Tecnologia' }, { palavra: 'INTERNET', categoria: 'Tecnologia' },
-    { palavra: 'CADEIRA', categoria: 'Objetos' }, { palavra: 'MORANGO', categoria: 'Frutas' }
+    { palavra: 'CADEIRA', categoria: 'Objetos' }, { palavra: 'MORANGO', categoria: 'Frutas' },
+    { palavra: 'ENGENHEIRO', categoria: 'Profissões' }, { palavra: 'JORNALISTA', categoria: 'Profissões' },
+    { palavra: 'ARGENTINA', categoria: 'Países' }, { palavra: 'TELEVISAO', categoria: 'Tecnologia' }
 ];
+//============================================================
 
 let palavraSecreta = '', letrasDescobertas = [], letrasTentadas = [], erros = 0, jogador = '';
 let ranking = []; 
