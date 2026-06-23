@@ -7,7 +7,7 @@ const rl = readline.createInterface(
 });
 
 /* ========================================================
-   BANCO DE DADOS (Expandido)
+   BANCO DE DADOS
    ======================================================== */
 const banco = [
     // Fácil (até 4 letras)
@@ -29,11 +29,13 @@ const banco = [
 ];
 
 let palavraSecreta = '', letrasDescobertas = [], letrasTentadas = [], erros = 0, jogador = '';
+const maxErros = 6;
 
 function iniciarJogo() 
 {
     console.log('--- BEM-VINDO AO JOGO DA FORCA ---');
-    rl.question('Digite seu nome: ', (nome) => {
+    rl.question('Digite seu nome: ', (nome) => 
+    {
         jogador = nome;
         escolherDificuldade();
     });
@@ -52,7 +54,8 @@ function escolherDificuldade()
         if (opcao === '1') filtro = banco.filter(p => p.palavra.length <= 4);
         else if (opcao === '2') filtro = banco.filter(p => p.palavra.length >= 5 && p.palavra.length <= 7);
         else if (opcao === '3') filtro = banco.filter(p => p.palavra.length >= 8);
-        else {
+        else 
+        {
             console.log('Opção inválida!');
             return escolherDificuldade();
         }
@@ -67,103 +70,59 @@ function escolherDificuldade()
 
 function jogar() 
 {
-    console.log(`\nPalavra: ${letrasDescobertas.join(' ')} | Erros: ${erros}/6`);
-    rl.question('Digite uma letra: ', (letra) => {
-        letra = letra.toUpperCase();
-        if (letrasTentadas.includes(letra)) { console.log('Já tentou essa!'); return jogar(); }
-        letrasTentadas.push(letra);
-
-        if (palavraSecreta.includes(letra)) {
-            palavraSecreta.split('').forEach((l, i) => { if (l === letra) letrasDescobertas[i] = letra; });
-        } else { erros++; }
-
-        if (erros >= 6) { console.log(`Perdeu! Era ${palavraSecreta}`); perguntarNovamente(); }
-        else if (!letrasDescobertas.includes('_')) { console.log('Você venceu!'); perguntarNovamente(); }
-        else jogar();
-    });
-}
-
-function perguntarNovamente() 
-{
-    rl.question('Jogar de novo? (s/n): ', (resp) => {
-        if (resp.toLowerCase() === 's') { erros = 0; letrasTentadas = []; escolherDificuldade(); }
-        else rl.close();
-    });
-}
-
-iniciarJogo();
-const maxErros = 6;
-
-function iniciarJogo() 
-{
-    console.log('--- JOGO DA FORCA ---');
-    rl.question('Digite seu nome: ', (nome) => {
-        jogador = nome;
-        sortearPalavra();
-    });
-}
-
-function sortearPalavra() 
-{
-    const sorteio = banco[Math.floor(Math.random() * banco.length)];
-    palavraSecreta = sorteio.palavra;
-    letrasDescobertas = Array(palavraSecreta.length).fill('_');
-    
-    console.log(`\nBem-vindo(a), ${jogador}! A categoria é: ${sorteio.categoria}`);
-    jogar();
-}
-
-function jogar() 
-{
-    console.log(`\nPalavra: ${letrasDescobertas.join(' ')}`);
-    console.log(`Tentativas erradas: ${erros}/${maxErros}`);
+    console.log(`\nPalavra: ${letrasDescobertas.join(' ')} | Erros: ${erros}/${maxErros}`);
     console.log(`Letras tentadas: ${letrasTentadas.join(', ')}`);
-
-    rl.question('Escolha uma letra: ', (letra) => {
+    
+    rl.question('Digite uma letra: ', (letra) => 
+    {
         letra = letra.toUpperCase();
-
-        if (letrasTentadas.includes(letra)) {
-            console.log('Você já tentou essa letra!');
-            return jogar();
+        if (letrasTentadas.includes(letra)) 
+        { 
+            console.log('Já tentou essa!'); 
+            return jogar(); 
         }
-
         letrasTentadas.push(letra);
 
-        if (palavraSecreta.includes(letra)) {
-            for (let i = 0; i < palavraSecreta.length; i++) {
-                if (palavraSecreta[i] === letra) letrasDescobertas[i] = letra;
-            }
-        } else {
-            erros++;
+        if (palavraSecreta.includes(letra)) 
+        {
+            palavraSecreta.split('').forEach((l, i) => { if (l === letra) letrasDescobertas[i] = letra; });
+        } 
+        else 
+        { 
+            erros++; 
         }
 
-        verificarFimDeJogo();
+        if (erros >= maxErros) 
+        { 
+            console.log(`\nFim de jogo! Você perdeu. A palavra era: ${palavraSecreta}`);
+            perguntarNovamente(); 
+        }
+        else if (!letrasDescobertas.includes('_')) 
+        { 
+            console.log('\nParabéns! Você venceu!'); 
+            perguntarNovamente(); 
+        }
+        else 
+        { 
+            jogar(); 
+        }
     });
-}
-
-function verificarFimDeJogo() 
-{
-    if (!letrasDescobertas.includes('_')) {
-        console.log(`\nParabéns ${jogador}, você venceu! A palavra era: ${palavraSecreta}`);
-        perguntarNovamente();
-    } else if (erros >= maxErros) {
-        console.log(`\nFim de jogo! Você perdeu. A palavra era: ${palavraSecreta}`);
-        perguntarNovamente();
-    } else {
-        jogar();
-    }
 }
 
 function perguntarNovamente() 
 {
-    rl.question('\nDeseja jogar novamente? (s/n): ', (resp) => {
-        if (resp.toLowerCase() === 's') {
-            erros = 0;
-            letrasTentadas = [];
-            sortearPalavra();
-        } else {
+    rl.question('\nJogar de novo? (s/n): ', (resp) => 
+    {
+        if (resp.toLowerCase() === 's') 
+        { 
+            erros = 0; 
+            letrasTentadas = []; 
+            escolherDificuldade(); 
+        }
+        else 
+        { 
             console.log('Até mais!');
-            rl.close();
+            rl.close(); 
         }
     });
 }
