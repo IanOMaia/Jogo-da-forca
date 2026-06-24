@@ -13,29 +13,38 @@ const rl = readline.createInterface(
    BANCO DE DADOS
    ======================================================== */
 const banco = [
-    // Fácil (até 4 letras)
-    { palavra: 'GATO', categoria: 'Animais' }, { palavra: 'UVA', categoria: 'Frutas' },
-    { palavra: 'PATO', categoria: 'Animais' }, { palavra: 'KIWI', categoria: 'Frutas' },
-    { palavra: 'MESA', categoria: 'Objetos' }, { palavra: 'REI', categoria: 'Geral' },
-    { palavra: 'BOLA', categoria: 'Objetos' }, { palavra: 'LUA', categoria: 'Natureza' },
-    { palavra: 'RUA', categoria: 'Geral' },
+    // FÁCEIS (até 4 letras) - 20 palavras
+    { palavra: 'GATO', categoria: 'Animais' }, { palavra: 'PATO', categoria: 'Animais' },
+    { palavra: 'URSO', categoria: 'Animais' }, { palavra: 'LOBO', categoria: 'Animais' },
+    { palavra: 'UVA', categoria: 'Frutas' }, { palavra: 'KIWI', categoria: 'Frutas' },
+    { palavra: 'JACA', categoria: 'Frutas' }, { palavra: 'COCO', categoria: 'Frutas' },
+    { palavra: 'MESA', categoria: 'Móveis' }, { palavra: 'SOFA', categoria: 'Móveis' },
+    { palavra: 'CAMA', categoria: 'Móveis' }, { palavra: 'RACK', categoria: 'Móveis' },
+    { palavra: 'FACA', categoria: 'Cozinha' }, { palavra: 'POTE', categoria: 'Cozinha' },
+    { palavra: 'COPO', categoria: 'Cozinha' }, { palavra: 'BOLO', categoria: 'Cozinha' },
+    { palavra: 'SOL', categoria: 'Natureza' }, { palavra: 'LUA', categoria: 'Natureza' },
+    { palavra: 'MAR', categoria: 'Natureza' }, { palavra: 'CEU', categoria: 'Natureza' },
 
-    // Médio (5 a 7 letras)
-    { palavra: 'MOUSE', categoria: 'Tecnologia' }, { palavra: 'BANANA', categoria: 'Frutas' },
-    { palavra: 'LIVRO', categoria: 'Objetos' }, { palavra: 'TIGRE', categoria: 'Animais' },
-    { palavra: 'CANETA', categoria: 'Objetos' }, { palavra: 'CHAVE', categoria: 'Objetos' },
-    { palavra: 'BOLSA', categoria: 'Objetos' }, { palavra: 'MACA', categoria: 'Frutas' },
-    { palavra: 'BRASIL', categoria: 'Países' }, { palavra: 'CANADA', categoria: 'Países' },
-    { palavra: 'JAPAO', categoria: 'Países' }, { palavra: 'MEDICO', categoria: 'Profissões' },
-    { palavra: 'PINTOR', categoria: 'Profissões' },
+    // MÉDIAS (5 a 7 letras) - 20 palavras
+    { palavra: 'TIGRE', categoria: 'Animais' }, { palavra: 'ZEBRA', categoria: 'Animais' },
+    { palavra: 'COELHO', categoria: 'Animais' }, { palavra: 'CAVALO', categoria: 'Animais' },
+    { palavra: 'BANANA', categoria: 'Frutas' }, { palavra: 'MAMÃO', categoria: 'Frutas' },
+    { palavra: 'LARANJA', categoria: 'Frutas' }, { palavra: 'ABACAXI', categoria: 'Frutas' },
+    { palavra: 'CADEIRA', categoria: 'Móveis' }, { palavra: 'ESTANTE', categoria: 'Móveis' },
+    { palavra: 'ARMÁRIO', categoria: 'Móveis' }, { palavra: 'GAVETA', categoria: 'Móveis' },
+    { palavra: 'TALHER', categoria: 'Cozinha' }, { palavra: 'PANELA', categoria: 'Cozinha' },
+    { palavra: 'FRIGIDE', categoria: 'Cozinha' }, { palavra: 'CHALEIRA', categoria: 'Cozinha' },
+    { palavra: 'NUVEM', categoria: 'Natureza' }, { palavra: 'TROVÃO', categoria: 'Natureza' },
+    { palavra: 'VULCÃO', categoria: 'Natureza' }, { palavra: 'DESERTO', categoria: 'Natureza' },
 
-    // Difícil (8 ou mais letras)
-    { palavra: 'COMPUTADOR', categoria: 'Tecnologia' }, { palavra: 'ELEFANTE', categoria: 'Animais' },
-    { palavra: 'TECLADO', categoria: 'Tecnologia' }, { palavra: 'INTERNET', categoria: 'Tecnologia' },
-    { palavra: 'CADEIRA', categoria: 'Objetos' }, { palavra: 'MORANGO', categoria: 'Frutas' },
-    { palavra: 'ENGENHEIRO', categoria: 'Profissões' }, { palavra: 'JORNALISTA', categoria: 'Profissões' },
-    { palavra: 'ARGENTINA', categoria: 'Países' }, { palavra: 'TELEVISAO', categoria: 'Tecnologia' }
+    // DIFÍCEIS (8 ou mais letras) - 10 palavras
+    { palavra: 'ELEFANTE', categoria: 'Animais' }, { palavra: 'ESQUILO', categoria: 'Animais' },
+    { palavra: 'MORANGO', categoria: 'Frutas' }, { palavra: 'TANGERINA', categoria: 'Frutas' },
+    { palavra: 'GUARDA-ROUPA', categoria: 'Móveis' }, { palavra: 'POLTRONA', categoria: 'Móveis' },
+    { palavra: 'MICROONDAS', categoria: 'Cozinha' }, { palavra: 'GELADEIRA', categoria: 'Cozinha' },
+    { palavra: 'TEMPESTADE', categoria: 'Natureza' }, { palavra: 'CACHOEIRA', categoria: 'Natureza' }
 ];
+
 //============================================================
 
 let palavraSecreta = '', letrasDescobertas = [], letrasTentadas = [], erros = 0, jogador = '';
